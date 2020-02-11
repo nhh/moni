@@ -2,6 +2,8 @@ const Table = require("cli-table");
 const axios = require('axios');
 require('./process-signal-handler');
 const colors = require('colors');
+const fs = require('fs');
+const HOSTS_PATH='~/.moni/hosts.json';
 
 const { registerInterceptors } = require("./request-interceptors");
 registerInterceptors(axios);
@@ -14,7 +16,7 @@ let table = new Table({ head: ['Host', 'Status', 'StatusText', 'Response Time (m
 
 table.push(["Loading...", "Loading...", "Loading...", "Loading..."]);
 
-const hosts = require("../hosts");
+const hosts = JSON.parse(fs.readFileSync(HOSTS_PATH));
 
 checkWebsites();
 

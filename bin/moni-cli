@@ -1,3 +1,36 @@
 #!/usr/bin/env NODE_ENV=production node
+const program = require('commander');
+const fs = require('fs');
 
-require("../src/index");
+const HOSTS_PATH='~/.moni/hosts.json'
+
+fs.mkdirSync('~/.moni', { recursive: true });
+
+if (!fs.existsSync(HOSTS_PATH)) {
+  fs.writeFileSync(HOSTS_PATH, JSON.stringify([]));
+}
+
+function addUrlToHosts(url) {
+  const hosts = JSON.parse(fs.readFileSync(HOSTS_PATH));
+  if(hosts.findIndex(host => host === url) !== -1) {
+    return console.log(`${url} is already added!`);
+  }
+  hosts.push(url);
+  fs.writeFileSync(HOSTS_PATH, JSON.stringify(hosts));
+  console.log(`${url} added!`);
+}
+
+function listHostUrls() {
+  const hosts = JSON.parse(fs.readFileSync(HOSTS_PATH));
+  console.log(hosts);
+}
+function watchHosts() {
+  require("../src/index");
+}
+
+program
+  .option('-a, --add <url>', 'url argument', addUrlToHosts)
+  .option('-l, --list', 'list urls', listHostUrls)
+  .option('-w, --watch', 'start watching hosts', watchHosts);
+
+program.parse(process.argv);
