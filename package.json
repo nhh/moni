@@ -1,5 +1,5 @@
 {
-  "name": "moni",
+  "name": "moni-cli",
   "version": "1.0.0",
   "description": "Cli monitoring tool",
   "main": "index.js",
