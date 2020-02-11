@@ -1,14 +1,16 @@
-const Table = require("cli-table");
+const Table = require("cli-table3");
 const axios = require('axios');
 require('./process-signal-handler');
 const colors = require('colors');
 const fs = require('fs');
-const HOSTS_PATH='~/.moni/hosts.json';
+const homedir = require('os').homedir();
+
+const HOSTS_PATH=homedir + '/.moni/hosts.json';
 
 const { registerInterceptors } = require("./request-interceptors");
 registerInterceptors(axios);
 
-let table = new Table({ head: ['Host', 'Status', 'StatusText', 'Response Time (ms)'], colWidths: [75, 50, 50, 50], chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
+let table = new Table({ head: ['Host', 'Status', 'StatusText', 'Response Time (ms)'], chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
         , 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
         , 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
         , 'right': '║' , 'right-mid': '╢' , 'middle': '│' }

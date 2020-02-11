@@ -1,10 +1,11 @@
 #!/usr/bin/env NODE_ENV=production node
 const program = require('commander');
 const fs = require('fs');
+const homedir = require('os').homedir();
 
-const HOSTS_PATH='~/.moni/hosts.json'
+const HOSTS_PATH=homedir + '/.moni/hosts.json'
 
-fs.mkdirSync('~/.moni', { recursive: true });
+fs.mkdirSync(homedir + '/.moni/', { recursive: true });
 
 if (!fs.existsSync(HOSTS_PATH)) {
   fs.writeFileSync(HOSTS_PATH, JSON.stringify([]));
