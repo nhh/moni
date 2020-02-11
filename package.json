@@ -21,6 +21,6 @@
     "cli-table": "^0.3.1"
   },
   "bin": {
-    "moni": "bin/moni-cli"
+    "moni": "./bin/moni-cli"
   }
 }
