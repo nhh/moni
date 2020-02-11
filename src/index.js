@@ -37,7 +37,6 @@ async function checkWebsites() {
 
 function createCell(response) {
     if(response.status > 499) {
-        notifier.notify(`${response.config.url} has status code: ${colors.red(response.status)}`);
         return [colors.red(response.config.url) , colors.red(response.status), colors.red(response.statusText), colors.red(response.duration) ]
     }
 
