@@ -1,6 +1,6 @@
 {
   "name": "moni-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Cli monitoring tool",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,6 @@
     "cli-table": "^0.3.1"
   },
   "bin": {
-    "moni": "NODE_ENV=production node src/index.js"
+    "moni": "bin/moni-cli"
   }
 }
