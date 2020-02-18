@@ -15,7 +15,7 @@
     "status-code"
   ],
   "author": "Niklas Hanft",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
     "cli-table3": "^0.5.1",

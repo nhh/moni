@@ -6,23 +6,22 @@ const fs = require('fs');
 const homedir = require('os').homedir();
 
 const HOSTS_PATH=homedir + '/.moni/hosts.json';
+const INTERVAL = 60000;
 
 const { registerInterceptors } = require("./request-interceptors");
 registerInterceptors(axios);
 
-let table = new Table({ head: ['Host', 'Status', 'StatusText', 'Response Time (ms)'], chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
+let table = new Table({ head: [`Host (Interval: ${INTERVAL / 1000}s)`, 'Status', 'StatusText', 'Response Time (ms)'], chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
         , 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
         , 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
         , 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
 });
 
-table.push(["Loading...", "Loading...", "Loading...", "Loading..."]);
-
 const hosts = JSON.parse(fs.readFileSync(HOSTS_PATH));
 
 checkWebsites();
 
-const jobIntervall = setInterval(checkWebsites, 5000);
+const jobIntervall = setInterval(checkWebsites, INTERVAL);
 
 async function checkWebsites() {
     const responses = await Promise.all(hosts.map((url) => axios.get(url, { validateStatus: () => true })));

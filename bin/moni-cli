@@ -11,6 +11,17 @@ if (!fs.existsSync(HOSTS_PATH)) {
   fs.writeFileSync(HOSTS_PATH, JSON.stringify([]));
 }
 
+function removeUrl(url) {
+    const hosts = JSON.parse(fs.readFileSync(HOSTS_PATH));
+    const index = hosts.findIndex(host => host === url);
+    if( index === -1) {
+      return console.log(`${url} was removed`);
+    }
+    hosts.splice(index, 1)
+    fs.writeFileSync(HOSTS_PATH, JSON.stringify(hosts));
+    console.log(`${url} was removed!`);
+}
+
 function addUrlToHosts(url) {
   const hosts = JSON.parse(fs.readFileSync(HOSTS_PATH));
   if(hosts.findIndex(host => host === url) !== -1) {
@@ -25,6 +36,7 @@ function listHostUrls() {
   const hosts = JSON.parse(fs.readFileSync(HOSTS_PATH));
   console.log(hosts);
 }
+
 function watchHosts() {
   require("../src/index");
 }
@@ -32,6 +44,7 @@ function watchHosts() {
 program
   .option('-a, --add <url>', 'url argument', addUrlToHosts)
   .option('-l, --list', 'list urls', listHostUrls)
+  .option('-d, --delete <url>', 'list urls', removeUrl)
   .option('-w, --watch', 'start watching hosts', watchHosts);
 
 program.parse(process.argv);
